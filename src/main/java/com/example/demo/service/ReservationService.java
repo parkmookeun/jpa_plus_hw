@@ -80,15 +80,16 @@ public class ReservationService {
 
     public List<Reservation> searchReservations(Long userId, Long itemId) {
 
-        if (userId != null && itemId != null) {
-            return reservationRepository.findByUserIdAndItemId(userId, itemId);
-        } else if (userId != null) {
-            return reservationRepository.findByUserId(userId);
-        } else if (itemId != null) {
-            return reservationRepository.findByItemId(itemId);
-        } else {
-            return reservationRepository.findAll();
-        }
+//        if (userId != null && itemId != null) {
+//            return reservationRepository.findByUserIdAndItemId(userId, itemId);
+//        } else if (userId != null) {
+//            return reservationRepository.findByUserId(userId);
+//        } else if (itemId != null) {
+//            return reservationRepository.findByItemId(itemId);
+//        } else {
+//            return reservationRepository.findAll();
+//        }
+        return reservationRepository.searchReservationsByQueryDsl(userId,itemId);
     }
 
     private List<ReservationResponseDto> convertToDto(List<Reservation> reservations) {
