@@ -1,6 +1,6 @@
 package com.example.demo.dto;
 
-import com.example.demo.entity.User;
+import com.example.demo.entity.Users;
 import lombok.Getter;
 
 @Getter
@@ -17,8 +17,8 @@ public class UserRequestDto {
         this.password = password;
     }
 
-    public User toEntity() {
-        return new User(
+    public Users toEntity() {
+        return new Users(
                 this.role,
                 this.email,
                 this.nickname,

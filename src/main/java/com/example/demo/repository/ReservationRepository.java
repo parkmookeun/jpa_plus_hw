@@ -12,9 +12,9 @@ import java.util.List;
 @Repository
 public interface ReservationRepository extends JpaRepository<Reservation, Long>, QueryDslReservationRepository {
 
-    List<Reservation> findByUserIdAndItemId(Long userId, Long itemId);
+    List<Reservation> findByUsersIdAndItemId(Long userId, Long itemId);
 
-    List<Reservation> findByUserId(Long userId);
+    List<Reservation> findByUsersId(Long userId);
 
     List<Reservation> findByItemId(Long itemId);
 
@@ -28,6 +28,10 @@ public interface ReservationRepository extends JpaRepository<Reservation, Long>,
             @Param("endAt") LocalDateTime endAt
     );
 
-    @Query("SELECT r FROM Reservation r JOIN FETCH r.user JOIN FETCH r.item")
+    @Query("SELECT r FROM Reservation r JOIN FETCH r.users JOIN FETCH r.item")
     List<Reservation> findAllInfo();
+
+    default Reservation findByIdOrElseThrow(Long id){
+        return findById(id).orElseThrow(() -> new IllegalArgumentException("해당 ID에 맞는 데이터가 존재하지 않습니다."));
+    }
 }
