@@ -5,8 +5,10 @@ import com.example.demo.dto.ReservationResponseDto;
 import com.example.demo.entity.*;
 import com.example.demo.exception.ReservationConflictException;
 import com.example.demo.repository.ItemRepository;
+import com.example.demo.repository.QueryDslReservationRepository;
 import com.example.demo.repository.ReservationRepository;
 import com.example.demo.repository.UserRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -15,21 +17,15 @@ import java.util.List;
 
 
 @Service
+@RequiredArgsConstructor
 public class ReservationService {
+
     private final ReservationRepository reservationRepository;
+    private final QueryDslReservationRepository queryDslReservationRepository;
     private final ItemRepository itemRepository;
     private final UserRepository userRepository;
     private final RentalLogService rentalLogService;
 
-    public ReservationService(ReservationRepository reservationRepository,
-                              ItemRepository itemRepository,
-                              UserRepository userRepository,
-                              RentalLogService rentalLogService) {
-        this.reservationRepository = reservationRepository;
-        this.itemRepository = itemRepository;
-        this.userRepository = userRepository;
-        this.rentalLogService = rentalLogService;
-    }
 
     // TODO: 1. 트랜잭션 이해
     @Transactional
@@ -89,7 +85,7 @@ public class ReservationService {
 //        } else {
 //            return reservationRepository.findAll();
 //        }
-        return reservationRepository.searchReservationsByQueryDsl(userId,itemId);
+        return queryDslReservationRepository.searchReservationsByQueryDsl(userId,itemId);
     }
 
     private List<ReservationResponseDto> convertToDto(List<Reservation> reservations) {

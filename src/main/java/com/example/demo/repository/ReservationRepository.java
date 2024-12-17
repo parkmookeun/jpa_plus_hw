@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Repository
-public interface ReservationRepository extends JpaRepository<Reservation, Long>, QueryDslReservationRepository {
+public interface ReservationRepository extends JpaRepository<Reservation, Long>{
 
     List<Reservation> findByUsersIdAndItemId(Long userId, Long itemId);
 

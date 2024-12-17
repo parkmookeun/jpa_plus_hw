@@ -32,7 +32,7 @@ dependencies {
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
     implementation 'at.favre.lib:bcrypt:0.10.2'
-
+    implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310'
     // QueryDSL
     implementation "com.querydsl:querydsl-jpa:5.0.0:jakarta"
     annotationProcessor "com.querydsl:querydsl-apt:5.0.0:jakarta"

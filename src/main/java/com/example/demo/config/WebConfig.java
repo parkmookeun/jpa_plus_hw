@@ -1,8 +1,6 @@
 package com.example.demo.config;
 
-import com.example.demo.entity.Role;
 import com.example.demo.filter.AuthFilter;
-import com.example.demo.filter.RoleFilter;
 import com.example.demo.interceptor.AdminRoleInterceptor;
 import com.example.demo.interceptor.AuthInterceptor;
 import com.example.demo.interceptor.UserRoleInterceptor;
@@ -52,12 +50,4 @@ public class WebConfig implements WebMvcConfigurer {
         return filterRegistrationBean;
     }
 
-    @Bean
-    public FilterRegistrationBean userRoleFilter() {
-        FilterRegistrationBean<Filter> filterRegistrationBean = new FilterRegistrationBean<>();
-        filterRegistrationBean.setFilter(new RoleFilter(Role.USER));
-        filterRegistrationBean.setOrder(Ordered.HIGHEST_PRECEDENCE + 2);
-        filterRegistrationBean.addUrlPatterns(USER_ROLE_REQUIRED_PATH_PATTERNS);
-        return filterRegistrationBean;
-    }
 }
