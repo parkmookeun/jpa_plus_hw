@@ -49,7 +49,6 @@ public class ReservationService {
 
     // TODO: 3. N+1 문제
     public List<ReservationResponseDto> getReservations() {
-//        List<Reservation> reservations = reservationRepository.findAll();
         List<Reservation> reservations = reservationRepository.findAllInfo();
 
         return reservations.stream().map(reservation -> {
@@ -104,26 +103,8 @@ public class ReservationService {
     @Transactional
     public void updateReservationStatus(Long reservationId, Status status) {
         Reservation reservation = reservationRepository.findByIdOrElseThrow(reservationId);
-//        if ("APPROVED".equals(status)) {
-//            if (!"PENDING".equals(reservation.getStatus())) {
-//                throw new IllegalArgumentException("PENDING 상태만 APPROVED로 변경 가능합니다.");
-//            }
-//            reservation.updateStatus("APPROVED");
-//        } else if ("CANCELED".equals(status)) {
-//            if ("EXPIRED".equals(reservation.getStatus())) {
-//                throw new IllegalArgumentException("EXPIRED 상태인 예약은 취소할 수 없습니다.");
-//            }
-//            reservation.updateStatus("CANCELED");
-//        } else if ("EXPIRED".equals(status)) {
-//            if (!"PENDING".equals(reservation.getStatus())) {
-//                throw new IllegalArgumentException("PENDING 상태만 EXPIRED로 변경 가능합니다.");
-//            }
-//            reservation.updateStatus("EXPIRED");
-//        } else {
-//            throw new IllegalArgumentException("올바르지 않은 상태: " + status);
-//
 
-//  위의 코드를 분석해보니 PENDING -> ALL / APPROVED -> CANCELED / CANCELED -> x / EXPIRED -> x
+//  코드를 분석해보니 PENDING -> ALL / APPROVED -> CANCELED / CANCELED -> x / EXPIRED -> x
         if(Status.APPROVED.equals(reservation.getStatus())){
             if(!status.equals(Status.CANCELED)){
                 throw new IllegalArgumentException("""
