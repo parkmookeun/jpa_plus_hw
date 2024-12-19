@@ -51,7 +51,6 @@ class ReservationServiceTest {
     private LocalDateTime END_AT;
     private Item MOCK_ITEM;
     private Users MOCK_USERS;
-    private Reservation MOCK_RESERVATION;
     @BeforeEach
     void setUp() {
         ITEM_ID = 1L;
@@ -63,10 +62,10 @@ class ReservationServiceTest {
 
         MOCK_ITEM = mock(Item.class);
         MOCK_USERS = mock(Users.class);
-        MOCK_RESERVATION = mock(Reservation.class);
     }
 
     @Test
+    @DisplayName("예약 생성_성공")
     void createReservation_Success() {
         // Given
         when(reservationRepository.findConflictingReservations(ITEM_ID, START_AT, END_AT))
@@ -99,6 +98,7 @@ class ReservationServiceTest {
     }
 
     @Test
+    @DisplayName("예약 생성_실패_Reservation_Conflict")
     void createReservation_ConflictException() {
         // Given
         Reservation existingReservation = mock(Reservation.class);
@@ -119,6 +119,7 @@ class ReservationServiceTest {
     }
 
     @Test
+    @DisplayName("예약 생성_실패_Item_Not_Found")
     void createReservation_ItemNotFound() {
         // Given
         when(reservationRepository.findConflictingReservations(ITEM_ID, START_AT, END_AT))
@@ -134,6 +135,7 @@ class ReservationServiceTest {
     }
 
     @Test
+    @DisplayName("예약 생성_실패_User_Not_Found")
     void createReservation_UserNotFound() {
         // Given
         when(reservationRepository.findConflictingReservations(ITEM_ID, START_AT, END_AT))
@@ -152,6 +154,7 @@ class ReservationServiceTest {
     }
 
     @Test
+    @DisplayName("모든예약 조회 테스트_성공")
     void getReservations_Success() {
         // Given
         LocalDateTime now = LocalDateTime.now();
@@ -217,6 +220,7 @@ class ReservationServiceTest {
     }
 
     @Test
+    @DisplayName("모든예약 조회 테스트_실패_빈 리스트")
     void getReservations_EmptyList() {
         // Given
         when(reservationRepository.findAllInfo())
@@ -235,6 +239,7 @@ class ReservationServiceTest {
 
 
     @Test
+    @DisplayName("유저아이디와 아이템아이디로 예약 찾기 테스트_성공")
     void searchAndConvertReservationsTest() {
         // 모의 예약 생성
         Reservation mockReservation1 = mock(Reservation.class);
