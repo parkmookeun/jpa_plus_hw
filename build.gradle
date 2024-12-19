@@ -59,17 +59,33 @@ test {
     finalizedBy jacocoTestReport  // 테스트 후 리포트 생성
 }
 
-jacocoTestReport {
-    reports {
-        xml.required = true
-        html.required = true
-        xml.required = true
-        xml.outputLocation = layout.buildDirectory.file("jacoco/jacoco.xml").get().asFile
-
-        html.required = true
-        html.outputLocation = layout.buildDirectory.file("jacoco/html").get().asFile
-    }
-}
+//jacocoTestReport {
+//    reports {
+//        html.required = true
+//        html.outputLocation = layout.buildDirectory.file("jacoco/html").get().asFile
+//    }
+//
+//    def excludeList = [
+//            'com/sparta/**/Q*.*',
+//            'com/sparta/**/dto/*',
+//            'com/sparta/**/entity/*',
+//            'com/sparta/**/config/*',
+//            'com/sparta/demo/DemoApplication.*'
+//    ]
+//
+//    afterEvaluate {
+//        classDirectories.setFrom(files(classDirectories.files.collect {
+//            fileTree(dir: it) {
+//                exclude excludeList
+//            }
+//        }))
+//        sourceDirectories.setFrom(files(sourceDirectories.files.collect {
+//            fileTree(dir: it) {
+//                exclude excludeList
+//            }
+//        }))
+//    }
+//}
 
 // 테스트 커버리지 체크 (선택사항)
 jacocoTestCoverageVerification {
@@ -81,6 +97,36 @@ jacocoTestCoverageVerification {
                 value = 'COVEREDRATIO'
                 minimum = 0.80
             }
+//            excludes = [
+//                    'com.sparta.**.dto.*',
+//                    'com.sparta.**.entity.*',
+//                    'com.sparta.**.config.*',
+//                    'com.sparta.demo.DemoApplication'
+//            ]
         }
+    }
+}
+
+jacocoTestReport {
+    reports {
+        html.required = true
+        html.outputLocation = layout.buildDirectory.file("jacoco/html").get().asFile
+    }
+    dependsOn test // tests are required to run before generating the report
+
+    afterEvaluate {
+        classDirectories.setFrom(files(classDirectories.files.collect {
+            fileTree(dir: it, exclude: [
+                    "com/example/demo/constants/**",
+                    "com/example/demo/controller/**",
+                    "com/example/demo/dto/**",
+                    "com/example/demo/entity/**",
+                    "com/example/demo/exception/**",
+                    "com/example/demo/filter/**",
+                    "com/example/demo/interceptor/**",
+                    "com/example/demo/repository/**",
+                    "com/example/demo/util/**",
+            ])
+        }))
     }
 }
